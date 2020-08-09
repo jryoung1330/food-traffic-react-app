@@ -56,12 +56,6 @@ const OrderLine = (props) => {
                 menuItem={menuItem}
             />
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-
-                {/* Quantity */}
-                <MontserratText style={{ fontSize: 20 }} isBold={true}>
-                    {quantity}
-                </MontserratText>
-                
                 {/* Change Quantity Buttons */}
                 <View>
                     <TouchableComponent onPress={() => updateQty(true)}>
@@ -71,6 +65,12 @@ const OrderLine = (props) => {
                         <MaterialIcons name="arrow-drop-down" size={50} />
                     </TouchableComponent>
                 </View>
+
+                {/* Quantity */}
+                <MontserratText style={{ fontSize: 20 }} isBold={true}>
+                    {quantity}
+                </MontserratText>
+                
             </View>
             <View>
                 {/* Order Line Total */}
@@ -81,7 +81,7 @@ const OrderLine = (props) => {
             <View>
                 {/* Delete Button */}
                 <TouchableComponent onPress={removeLine}>
-                    <MaterialIcons name="close" size={40} />
+                    <MaterialIcons name="close" size={40} color={'red'} />
                 </TouchableComponent>
             </View>
         </View>

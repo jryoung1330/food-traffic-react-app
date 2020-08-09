@@ -14,6 +14,7 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterVendorScreen from '../screens/RegisterVendorScreen';
 import RegisterUserScreen from '../screens/RegisterUserScreen';
 import AppTheme from '../constants/AppTheme';
+import CheckoutScreen from '../screens/CheckoutScreen';
 
 
 const mainNav = createStackNavigator(
@@ -53,6 +54,27 @@ const searchNav = createStackNavigator(
             }
         },
         FoodTruck: FoodTruckScreen,
+    },
+    {
+        defaultNavigationOptions: {
+            headerTitleAlign: 'center',
+            headerTitleStyle:{
+                fontFamily: 'montserrat-bold'
+            }
+        }
+    },
+);
+
+const cartNav = createStackNavigator(
+    {
+        Cart: {
+            name: "Cart",
+            screen: CartScreen,
+            navigationOptions: {
+                headerShown: false
+            }
+        },
+        Checkout: CheckoutScreen,
     },
     {
         defaultNavigationOptions: {
@@ -134,7 +156,7 @@ const tabBarConfig = {
         },
     },
     Cart: {
-        screen: CartScreen,
+        screen: cartNav,
         navigationOptions: {
             tabBarIcon: (tabInfo) => {
                 return (

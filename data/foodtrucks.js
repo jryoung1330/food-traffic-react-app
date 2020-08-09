@@ -300,25 +300,7 @@ export const MENUS = [
             'https://previews.123rf.com/images/markstout/markstout1402/markstout140200051/25759942-a-hot-dog-with-french-fries-closeup-served-in-a-basket.jpg'
         ),
     ]),
-    new Menu(1005, 105, 'Entrees', [
-        new MenuItem(
-            10014,
-            1005,
-            'Big Burger',
-            '1/2 lb hamburger',
-            8.0,
-            900,
-            'hamburger patties, lettuce, ketchup, mustard, and cheese (optional)',
-            null,
-            false,
-            false,
-            false,
-            false,
-            false,
-            'https://nationaltoday.com/wp-content/uploads/2019/09/cheeseburger3.jpg'
-        )
-    ]),
-    new Menu(1006, 105, 'Milkshakes' [
+    new Menu(1006, 105, 'Milkshakes', [
         new MenuItem(
             10017,
             1006,
@@ -333,7 +315,7 @@ export const MENUS = [
             false,
             false,
             true,
-            'https://www.google.com/imgres?imgurl=https%3A%2F%2Ftastesbetterfromscratch.com%2Fwp-content%2Fuploads%2F2020%2F03%2FOreo-Milkshake-10.jpg&imgrefurl=https%3A%2F%2Ftastesbetterfromscratch.com%2Foreo-milkshake%2F&tbnid=iS8pBxWffu7KWM&vet=12ahUKEwjR_bjV-dfqAhUSh1MKHZL4CcoQMygMegUIARCYAg..i&docid=JQSWSPEdR1QEBM&w=683&h=1024&q=milkshake&client=safari&ved=2ahUKEwjR_bjV-dfqAhUSh1MKHZL4CcoQMygMegUIARCYAg',
+            'https://www.marbleslab.com/wp-content/uploads/2018/10/Oreo-Shake-e1538488371852.jpg',
         )
     ]),
 ];
