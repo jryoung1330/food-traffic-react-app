@@ -12,7 +12,7 @@ import {
     View,
 } from 'react-native';
 import MenuCarousel from '../components/MenuCarousel';
-import MenuItem from '../components/MenuItem';
+import MenuItemCard from '../components/MenuItemCard';
 import MontserratText from '../components/MontserratText';
 import Section from '../components/Section';
 import Tag from '../components/Tag';
@@ -60,7 +60,7 @@ const FoodTruckScreen = (props) => {
 
     const renderMenuItem = (itemData) => {
         return (
-            <MenuItem
+            <MenuItemCard
                 onPress={() =>
                     turnOnModal(itemData.item.id, itemData.item.menuId)
                 }

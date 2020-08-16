@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import React, { useCallback, useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import MenuItem from '../components/MenuItem';
+import MenuItemCard from './MenuItemCard';
 import MontserratText from '../components/MontserratText';
 import { MENUS } from '../data/foodtrucks';
 import { changeQuantity, removeFromCart } from '../store/actions/orders';
@@ -50,7 +50,7 @@ const OrderLine = (props) => {
     return (
         <View style={styles.menuRow}>
             {/* Menu Item Card */}
-            <MenuItem
+            <MenuItemCard
                 height={120}
                 width={Dimensions.get('window').width * 0.4}
                 menuItem={menuItem}

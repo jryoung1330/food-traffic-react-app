@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import MenuItemCard from './MenuItemCard';
+import MenuItemDetail from './MenuItemDetail';
 
 const MenuCarousel = (props) => {
     const startingIndex = props.index;
@@ -15,7 +15,7 @@ const MenuCarousel = (props) => {
 
     const _renderItem = (itemData) => {
         return (
-            <MenuItemCard
+            <MenuItemDetail
                 menuItem={itemData.item}
                 setShowModal={props.setShowModal}
                 animationStart={props.animationStart}
