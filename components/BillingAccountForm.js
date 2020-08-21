@@ -5,7 +5,6 @@ import AppTheme from '../constants/AppTheme';
 import TouchableComponent from './TouchableComponent';
 
 const BillingAccountForm = (props) => {
-    let lastForm = 'Tag-Form';
     return (
         <View style={styles.screen}>
             {/* Form Icon */}
@@ -44,7 +43,7 @@ const BillingAccountForm = (props) => {
 
             {/* Control Flow Buttons */}
             <View style={styles.forwardButton}>
-                <TouchableComponent onPress={() => setFormToShow(lastForm)}>
+                <TouchableComponent>
                     <MaterialIcons name="arrow-back" size={50} />
                 </TouchableComponent>
                 <TouchableComponent
