@@ -1,13 +1,14 @@
 import React from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 import MontserratText from '../components/MontserratText';
 import OrderLine from '../components/OrderLine';
 import AppTheme from '../constants/AppTheme';
+import TouchableComponent from '../components/TouchableComponent';
 
 const CartScreen = (props) => {
-    const cart = useSelector(state => state.orders.order);
+    const cart = useSelector((state) => state.orders.order);
 
     const renderOrderLine = (itemData) => {
         return <OrderLine orderItem={itemData.item} />;
@@ -21,11 +22,23 @@ const CartScreen = (props) => {
                 renderItem={renderOrderLine}
                 keyExtractor={(item, index) => item.id.toString()}
             />
-            <View style={styles.checkoutBar}>
-                <MontserratText isBold={true} style={{ fontSize: 16 }}>
-                    {"Proceed to Checkout ($" + cart.total.toFixed(2) + ")"}
-                </MontserratText>
-            </View>
+            {/* Checkout Button */}
+            <TouchableComponent style={styles.checkoutBarContainer}
+                onPress={() => {
+                    props.navigation.navigate({
+                        routeName: 'Checkout',
+                    });
+                }}
+            >
+                <View style={styles.checkoutBar}>
+                    <MontserratText
+                        isBold={true}
+                        style={styles.checkoutBarText}
+                    >
+                        {'Proceed to Checkout ($' + cart.total.toFixed(2) + ')'}
+                    </MontserratText>
+                </View>
+            </TouchableComponent>
         </SafeAreaView>
     ) : (
         <View style={styles.emptyCartScreen}>
@@ -44,21 +57,31 @@ const styles = StyleSheet.create({
     emptyCartScreen: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     scrollSection: {
         width: '100%',
         height: '97%',
     },
+    checkoutBarContainer: {
+        bottom: 0,
+        position: 'absolute',
+        width: '100%',
+    },
+    checkoutBarText: {
+        fontSize: 16,
+        color:
+            Platform.OS === 'android'
+                ? AppTheme.secondaryColor
+                : AppTheme.primaryColor,
+    },
     checkoutBar: {
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
         padding: 20,
         alignItems: 'center',
-        position: 'absolute',
-        bottom: 0,
-        width: '100%',
-        backgroundColor: AppTheme.secondaryColor,
+        backgroundColor:
+            Platform.OS === 'android'
+                ? AppTheme.primaryColor
+                : AppTheme.secondaryColor,
     },
     link: {
         textDecorationLine: 'underline',

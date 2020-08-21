@@ -7,7 +7,11 @@ import TouchableComponent from '../components/TouchableComponent';
 const RegisterUserScreen = (props) => {
     return (
         <View style={styles.screen}>
-            <MaterialIcons name="account-circle" size={70} />
+            <MaterialIcons
+                name="account-circle"
+                color={AppTheme.primaryColor}
+                size={70}
+            />
             <View style={styles.form}>
                 <TextInput style={styles.input} placeholder="Name" />
                 <TextInput style={styles.input} placeholder="User Name" />
@@ -30,7 +34,11 @@ const RegisterUserScreen = (props) => {
                         });
                     }}
                 >
-                    <MaterialIcons name="check" size={50} />
+                    <MaterialIcons
+                        name="check"
+                        color={AppTheme.primaryColor}
+                        size={50}
+                    />
                 </TouchableComponent>
             </View>
         </View>
@@ -42,7 +50,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: AppTheme.secondaryColor
+        backgroundColor: AppTheme.secondaryColor,
     },
     form: {
         marginTop: 60,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MontserratText from '../components/MontserratText';
 import Section from '../components/Section';
@@ -87,35 +87,52 @@ const ProfileScreen = (props) => {
                 fontSize={22}
                 style={styles.profileName}
             >
-                Andrea Jimenez
+                Andrea Juarez
             </MontserratText>
-            <Section style={styles.boxRow}>
-                {/* Number of Favorites */}
-                <View style={styles.box}>
-                    <MontserratText
-                        fontSize={18}
-                        centerText={true}
-                        isBold={true}
-                    >
-                        10
-                    </MontserratText>
-                    <MontserratText>FAVORITES</MontserratText>
-                </View>
-                <View style={styles.box}>
-                    {/* Number of Orders */}
-                    <MontserratText
-                        fontSize={18}
-                        centerText={true}
-                        isBold={true}
-                    >
-                        10
-                    </MontserratText>
-                    <MontserratText>ORDERS</MontserratText>
-                </View>
-            </Section>
             <Section title="Account Info">
                 <EmailInput />
                 <PasswordInput />
+            </Section>
+            <Section style={styles.boxRow}>
+                {/* Number of Favorites */}
+                <View style={styles.box}>
+                    <TouchableComponent
+                    // onPress={() => {
+                    //     props.navigation.navigate({
+                    //         routeName: 'FoodTruck',
+                    //         params: { id: itemData.item.id },
+                    //     });
+                    // }}
+                    >
+                        <View>
+                            <MontserratText
+                                fontSize={18}
+                                centerText={true}
+                                isBold={true}
+                            >
+                                10
+                            </MontserratText>
+                            <MontserratText>FAVORITES</MontserratText>
+                        </View>
+                    </TouchableComponent>
+                </View>
+            </Section>
+            <Section>
+                <View style={styles.box}>
+                    {/* Number of Orders */}
+                    <TouchableComponent>
+                        <View>
+                            <MontserratText
+                                fontSize={18}
+                                centerText={true}
+                                isBold={true}
+                            >
+                                10
+                            </MontserratText>
+                            <MontserratText>ORDERS</MontserratText>
+                        </View>
+                    </TouchableComponent>
+                </View>
             </Section>
         </SafeAreaView>
     );
@@ -125,9 +142,11 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         alignItems: 'center',
+        justifyContent: 'space-around',
     },
     profileName: {
         marginTop: 50,
+        textDecorationLine: 'underline',
     },
     row: {
         flexDirection: 'row',
@@ -143,11 +162,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '40%'
     },
     box: {
         padding: 20,
         marginHorizontal: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     buttonText: {
         color: 'black',

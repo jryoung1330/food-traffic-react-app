@@ -9,31 +9,93 @@ import {
     Platform,
     SafeAreaView,
     StyleSheet,
-    TouchableOpacity,
     View,
 } from 'react-native';
-import AdjustableScrollView from '../components/AdjustableScrollView';
 import MenuCarousel from '../components/MenuCarousel';
-import MenuItem from '../components/MenuItem';
+import MenuItemCard from '../components/MenuItemCard';
 import MontserratText from '../components/MontserratText';
 import Section from '../components/Section';
 import Tag from '../components/Tag';
-import { FOODTRUCKS, MENUS } from '../data/foodtrucks';
-import AppTheme from '../constants/AppTheme';
 import TouchableComponent from '../components/TouchableComponent';
+import AppTheme from '../constants/AppTheme';
+import { FOODTRUCKS, MENUS } from '../data/foodtrucks';
 
 const FoodTruckScreen = (props) => {
     const id = props.navigation.getParam('id');
     const foodtruck = FOODTRUCKS.find((f) => f.id === id);
-    const menu = MENUS.find((m) => m.foodTruckId === id);
 
+    const menus = [];
+    MENUS.forEach((m) => {
+        if (m.foodTruckId === id) menus.push(m);
+    });
+
+    const [menu, setMenu] = useState(menus[0]);
     const [showModal, setShowModal] = useState(false);
     const [startIndex, setStartIndex] = useState(0);
     const [selectedMenuItem, setSelectedMenuItem] = useState(menu.menuItems[0]);
     const [itemName, setItemName] = useState('');
     const [fade, setFade] = useState(new Animated.Value(0));
 
-    const _doubleTap = (name) => {
+    const renderMenu = (itemData) => {
+        const menu = itemData.item;
+        return (
+            <Section
+                alignTitleLeft={true}
+                title={menu.description}
+                titleFontSize={20}
+                titleStyle={{ marginLeft: 10 }}
+            >
+                <FlatList
+                    style={{ width: '100%' }}
+                    data={menu.menuItems}
+                    renderItem={renderMenuItem}
+                    horizontal={true}
+                    keyExtractor={(item, index) => {
+                        return item.id.toString();
+                    }}
+                />
+            </Section>
+        );
+    };
+
+    const renderMenuItem = (itemData) => {
+        return (
+            <MenuItemCard
+                onPress={() =>
+                    turnOnModal(itemData.item.id, itemData.item.menuId)
+                }
+                menuItem={itemData.item}
+                height={150}
+                width={Dimensions.get('window').width * 0.5}
+            />
+        );
+    };
+
+    const renderTag = (itemData) => {
+        return <Tag>{itemData.item}</Tag>;
+    };
+
+    const setIndexOfCarousel = (index) => {
+        setSelectedMenuItem(menu.menuItems[index]);
+    };
+
+    const turnOnModal = (id, menuId) => {
+        const menu = MENUS.find((m) => m.id === menuId);
+        const item = menu.menuItems.find((i) => i.id === id);
+        const index = menu.menuItems.indexOf(item);
+
+        setMenu(menu);
+        setStartIndex(index);
+        setSelectedMenuItem(menu.menuItems[index]);
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+        setFade(new Animated.Value(0));
+    };
+
+    const _fade = (name) => {
         setItemName(name);
         Animated.timing(fade, {
             toValue: 1,
@@ -46,77 +108,37 @@ const FoodTruckScreen = (props) => {
         });
     };
 
-    const closeModal = () => {
-        setShowModal(false);
-        setFade(new Animated.Value(0));
-    };
-
-    const turnOnModal = (id) => {
-        const item = menu.menuItems.find((i) => i.id === id);
-        const index = menu.menuItems.indexOf(item);
-
-        setStartIndex(index);
-        setSelectedMenuItem(menu.menuItems[index]);
-        setShowModal(true);
-    };
-
-    const renderMenuItem = (itemData) => {
-        return (
-            <MenuItem
-                onPress={() => turnOnModal(itemData.item.id)}
-                menuItem={itemData.item}
-                height={150}
-                width={Dimensions.get('window').width * 0.5}
-            />
-        );
-    };
-
-    const setIndexOfCarousel = (index) => {
-        setSelectedMenuItem(menu.menuItems[index]);
-    };
-
-    const renderTag = (itemData) => {
-        return <Tag>{itemData.item}</Tag>;
-    };
-
     return (
         <SafeAreaView style={styles.screen}>
             {/* Main Screen View Start */}
             <View style={styles.ftscreen}>
-                <AdjustableScrollView style={styles.ftScrollSections}>
-                    <Image
-                        style={styles.img}
-                        source={{ uri: foodtruck.image }}
-                    />
+                <Image style={styles.img} source={{ uri: foodtruck.image }} />
+                <View style={styles.tagList}>
                     <FlatList
-                        style={styles.tagList}
                         data={foodtruck.tags}
                         renderItem={renderTag}
                         horizontal={true}
                         keyExtractor={(item, index) => item}
                     />
-                    <Section
-                        alignTitleLeft={true}
-                        title={menu.description}
-                        titleFontSize={20}
-                        titleStyle={{ marginLeft: 10 }}
-                    >
-                        <FlatList
-                            style={{ width: '100%' }}
-                            data={menu.menuItems}
-                            renderItem={renderMenuItem}
-                            horizontal={true}
-                            keyExtractor={(item, index) => {
-                                return item.id.toString();
-                            }}
-                        />
-                    </Section>
-                </AdjustableScrollView>
+                </View>
+                <FlatList
+                    style={{ width: '100%' }}
+                    nestedScrollEnabled
+                    data={menus}
+                    renderItem={renderMenu}
+                    keyExtractor={(item, index) => {
+                        return item.id.toString();
+                    }}
+                />
             </View>
             {/* Main Screen View End */}
 
             {/* Modal View Start */}
-            <Modal animationType="slide" visible={showModal}>
+            <Modal
+                animationType="slide"
+                visible={showModal}
+                onRequestClose={closeModal}
+            >
                 <View style={styles.modalScreen}>
                     <View
                         style={{
@@ -133,7 +155,7 @@ const FoodTruckScreen = (props) => {
                         menuItems={menu.menuItems}
                         index={startIndex}
                         renderer={setIndexOfCarousel}
-                        animationStart={_doubleTap}
+                        animationStart={_fade}
                     />
                     <Animated.View
                         style={{ ...styles.notification, ...{ opacity: fade } }}
@@ -167,10 +189,6 @@ const styles = StyleSheet.create({
     },
     ftscreen: {
         flex: 1,
-        alignItems: 'center',
-    },
-    ftScrollSections: {
-        width: '100%',
     },
     img: {
         padding: 25,

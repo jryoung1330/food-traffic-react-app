@@ -16,6 +16,8 @@ const FoodTruckCard = (props) => {
     let displayTags = [];
     if (props.foodtruck.tags.length > 1) {
         displayTags = [props.foodtruck.tags[0], props.foodtruck.tags[1]];
+    } else {
+        displayTags = [props.foodtruck.tags[0]];
     }
 
     const dispatch = useDispatch();

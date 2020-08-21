@@ -2,7 +2,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import React, { useCallback, useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import MenuItem from '../components/MenuItem';
+import MenuItemCard from './MenuItemCard';
 import MontserratText from '../components/MontserratText';
 import { MENUS } from '../data/foodtrucks';
 import { changeQuantity, removeFromCart } from '../store/actions/orders';
@@ -50,18 +50,12 @@ const OrderLine = (props) => {
     return (
         <View style={styles.menuRow}>
             {/* Menu Item Card */}
-            <MenuItem
+            <MenuItemCard
                 height={120}
                 width={Dimensions.get('window').width * 0.4}
                 menuItem={menuItem}
             />
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-
-                {/* Quantity */}
-                <MontserratText style={{ fontSize: 20 }} isBold={true}>
-                    {quantity}
-                </MontserratText>
-                
                 {/* Change Quantity Buttons */}
                 <View>
                     <TouchableComponent onPress={() => updateQty(true)}>
@@ -71,6 +65,12 @@ const OrderLine = (props) => {
                         <MaterialIcons name="arrow-drop-down" size={50} />
                     </TouchableComponent>
                 </View>
+
+                {/* Quantity */}
+                <MontserratText style={{ fontSize: 20 }} isBold={true}>
+                    {quantity}
+                </MontserratText>
+                
             </View>
             <View>
                 {/* Order Line Total */}
@@ -81,7 +81,7 @@ const OrderLine = (props) => {
             <View>
                 {/* Delete Button */}
                 <TouchableComponent onPress={removeLine}>
-                    <MaterialIcons name="close" size={40} />
+                    <MaterialIcons name="close" size={40} color={'red'} />
                 </TouchableComponent>
             </View>
         </View>
